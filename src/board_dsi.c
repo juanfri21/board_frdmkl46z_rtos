@@ -154,6 +154,7 @@ void board_setLed(board_ledId_enum id, board_ledMsg_enum msg)
         	GPIO_PortClear(board_gpioLeds[id].gpio, 1<<board_gpioLeds[id].pin);
         	vTaskDelay(1000 / portTICK_PERIOD_MS);
         	GPIO_PortSet(board_gpioLeds[id].gpio, 1<<board_gpioLeds[id].pin);
+        	break;
 
         case BOARD_LED_MSG_HEART:
         	for(uint8_t i=0; i < 2; i++)
@@ -163,6 +164,7 @@ void board_setLed(board_ledId_enum id, board_ledMsg_enum msg)
         			GPIO_PortSet(board_gpioLeds[id].gpio, 1<<board_gpioLeds[id].pin);
         			vTaskDelay(200 / portTICK_PERIOD_MS);
         		}
+        	break;
 
         default:
             break;
