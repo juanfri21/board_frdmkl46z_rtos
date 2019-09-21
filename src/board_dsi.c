@@ -36,6 +36,8 @@
 #include <board_dsi.h>
 #include <i2c.h>
 #include <mma8451.h>
+#include "FreeRTOS.h"
+#include "task.h"
 
 #include "fsl_port.h"
 #include "fsl_gpio.h"
@@ -147,6 +149,20 @@ void board_setLed(board_ledId_enum id, board_ledMsg_enum msg)
         case BOARD_LED_MSG_TOGGLE:
         	GPIO_PortToggle(board_gpioLeds[id].gpio, 1<<board_gpioLeds[id].pin);
             break;
+
+        case BOARD_LED_MSG_BLINKY:
+        	GPIO_PortClear(board_gpioLeds[id].gpio, 1<<board_gpioLeds[id].pin);
+        	vTaskDelay(1000 / portTICK_PERIOD_MS);
+        	GPIO_PortSet(board_gpioLeds[id].gpio, 1<<board_gpioLeds[id].pin);
+
+        case BOARD_LED_MSG_HEART:
+        	for(uint8_t i=0; i < 2; i++)
+        		{
+        			GPIO_PortClear(board_gpioLeds[id].gpio, 1<<board_gpioLeds[id].pin);
+        			vTaskDelay(200 / portTICK_PERIOD_MS); // EL TICK PUEDE CAMBIARSE, AHORA ES 5, MINIMO 1ms
+        			GPIO_PortSet(board_gpioLeds[id].gpio, 1<<board_gpioLeds[id].pin);
+        			vTaskDelay(200 / portTICK_PERIOD_MS);
+        		}
 
         default:
             break;
