@@ -71,11 +71,13 @@ typedef enum
  **/
 void mma8451_init(void);
 
-/** \brief Lee lectura del aceler�metro en el eje X
+/** \brief Lee lectura del aceler�metro en el eje X, Y, Z
  **
  ** \return Lectura del aceler�metro en cent�cimas de g
  **/
 int16_t mma8451_getAcX(void);
+int16_t mma8451_getAcY(void);
+int16_t mma8451_getAcZ(void);
 
 void mma8451_setDataRate(DR_enum rate);
 
